@@ -13,7 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Sparkles, Plus, LayoutDashboard, CreditCard, LogOut, User } from "lucide-react"
+import { Sparkles, Plus, LayoutDashboard, CreditCard, LogOut } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 interface DashboardHeaderProps {
   email: string
@@ -69,6 +70,8 @@ export function DashboardHeader({ email }: DashboardHeaderProps) {
               Generate Script
             </Button>
           </Link>
+
+          <ThemeToggle />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
