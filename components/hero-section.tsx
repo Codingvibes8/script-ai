@@ -17,14 +17,14 @@ export function HeroSection() {
             AI-powered script generation for creators
           </div>
 
-          <h1 className="max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="max-w-4xl text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
             Create Engaging Scripts with{" "}
             <span className="bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
               AI Power
             </span>
           </h1>
 
-          <p className="max-w-2xl text-lg text-muted-foreground md:text-xl">
+          <p className="max-w-2xl text-base text-muted-foreground sm:text-lg md:text-xl">
             Generate professional scripts for YouTube videos, TikTok shorts, podcasts,
             and Instagram reels in seconds. Say goodbye to writer&apos;s block forever.
           </p>
@@ -43,22 +43,22 @@ export function HeroSection() {
             </Link>
           </div>
 
-          <div className="flex items-center gap-8 pt-8">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-8">
             <div className="flex items-center gap-2 text-muted-foreground">
-              <Video className="h-5 w-5" />
-              <span className="text-sm">YouTube</span>
+              <Video className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="text-xs sm:text-sm">YouTube</span>
             </div>
             <div className="flex items-center gap-2 text-muted-foreground">
-              <Play className="h-5 w-5" />
-              <span className="text-sm">TikTok</span>
+              <Play className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="text-xs sm:text-sm">TikTok</span>
             </div>
             <div className="flex items-center gap-2 text-muted-foreground">
-              <Mic className="h-5 w-5" />
-              <span className="text-sm">Podcasts</span>
+              <Mic className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="text-xs sm:text-sm">Podcasts</span>
             </div>
             <div className="flex items-center gap-2 text-muted-foreground">
-              <Instagram className="h-5 w-5" />
-              <span className="text-sm">Reels</span>
+              <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="text-xs sm:text-sm">Reels</span>
             </div>
           </div>
         </div>

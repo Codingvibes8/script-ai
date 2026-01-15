@@ -46,7 +46,7 @@ export function FeaturesSection() {
     <section id="features" className="py-20 md:py-32 bg-muted/50">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center space-y-4 text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
             Everything You Need to Create
           </h2>
           <p className="max-w-2xl text-muted-foreground md:text-lg">

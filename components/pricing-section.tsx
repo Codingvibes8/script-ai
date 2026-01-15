@@ -62,7 +62,7 @@ export function PricingSection() {
     <section id="pricing" className="py-20 md:py-32">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center space-y-4 text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
             Simple, Transparent Pricing
           </h2>
           <p className="max-w-2xl text-muted-foreground md:text-lg">
@@ -70,11 +70,11 @@ export function PricingSection() {
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8 max-w-5xl mx-auto">
           {plans.map((plan) => (
             <Card
               key={plan.name}
-              className={`relative flex flex-col ${plan.popular ? "border-primary shadow-lg" : ""}`}
+              className={`relative flex flex-col ${plan.popular ? "border-primary shadow-lg sm:scale-105" : ""}`}
             >
               {plan.popular && (
                 <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">
