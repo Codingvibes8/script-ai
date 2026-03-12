@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/components/ui/use-toast"
-import { Loader2, Sparkles, Copy, Download, Save, RefreshCw } from "lucide-react"
+import { Loader2, Sparkles, Copy, Download, RefreshCw } from "lucide-react"
 
 const contentTypes = [
   { value: "youtube", label: "YouTube Video" },
@@ -51,7 +51,6 @@ export function ScriptGenerator() {
   const [targetAudience, setTargetAudience] = useState("")
   const [generatedScript, setGeneratedScript] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
-  const [isSaving, setIsSaving] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
 
@@ -93,16 +92,47 @@ export function ScriptGenerator() {
         throw new Error("No response body")
       }
 
+      let fullScript = ""
       while (true) {
         const { done, value } = await reader.read()
         if (done) break
         const chunk = decoder.decode(value)
+        fullScript += chunk
         setGeneratedScript((prev) => prev + chunk)
+      }
+      
+      // Auto-save the generated script
+      try {
+        const saveResponse = await fetch("/api/save-script", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title,
+            content: fullScript,
+            contentType,
+            duration,
+            tone,
+            targetAudience,
+          }),
+        })
+        
+        if (!saveResponse.ok) {
+          const errorData = await saveResponse.json().catch(() => ({}));
+          throw new Error(errorData.error || "Failed to save script to database");
+        }
+        
+      } catch (saveError) {
+        console.error("Failed to auto-save script:", saveError)
+        toast({
+          variant: "destructive",
+          title: "Save Error",
+          description: saveError instanceof Error ? saveError.message : "Failed to auto-save script",
+        })
       }
 
       toast({
         title: "Script generated",
-        description: "Your script has been generated successfully.",
+        description: "Your script has been generated and saved to your dashboard.",
       })
     } catch (error) {
       toast({
@@ -112,47 +142,6 @@ export function ScriptGenerator() {
       })
     } finally {
       setIsGenerating(false)
-    }
-  }
-
-  const handleSave = async () => {
-    if (!generatedScript) return
-
-    setIsSaving(true)
-
-    try {
-      const response = await fetch("/api/save-script", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title,
-          content: generatedScript,
-          contentType,
-          duration,
-          tone,
-          targetAudience,
-        }),
-      })
-
-      if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error || "Failed to save script")
-      }
-
-      toast({
-        title: "Script saved",
-        description: "Your script has been saved to your dashboard.",
-      })
-
-      router.push("/dashboard")
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to save script",
-      })
-    } finally {
-      setIsSaving(false)
     }
   }
 
@@ -331,19 +320,6 @@ export function ScriptGenerator() {
               <Button variant="outline" onClick={handleDownload}>
                 <Download className="mr-2 h-4 w-4" />
                 Download
-              </Button>
-              <Button onClick={handleSave} disabled={isSaving}>
-                {isSaving ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  <>
-                    <Save className="mr-2 h-4 w-4" />
-                    Save Script
-                  </>
-                )}
               </Button>
             </div>
           )}
